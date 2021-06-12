@@ -52,13 +52,13 @@ img{
   max-width: 1300px;
   padding: 0 10px;
 }
-.hed .nav-list ul{
+ .hed .nav-list ul{
   list-style: none;
   position: absolute;
   background-color: rgba(31,30,30);
   width: 100vw;
   height: 100vh;
-  left: 0;
+  left: 100%;
   top: 0;
   display: flex;
   flex-direction: column;
@@ -66,6 +66,10 @@ img{
   align-items: center;
   z-index: 1;
   overflow: hidden;
+  transition: .5s ease left;
+}
+.hed .nav-list ul.active{
+  left: 0%;
 }
  .nav-list ul a{
 font-size: 2.5rem;
@@ -79,20 +83,85 @@ display: block;
 }
 
 .nav-list ul a::after{
-  content:'Text'; 
+  content:attr(data-after); 
   position: absolute;
   top: 50%;
   left: 50%;
   transform:translate(-50%, -50%) scale(0);
   color: rgba(240,248,255,0.021);
   font-size:15rem;
-  letter-spacing: 50%;
+  letter-spacing: 50px;
   Z-index: -1;
+  transition: .3s ease letter-spacing;
+}
+
+.nav-list ul li:hover a::after {
+  transform: translate(-50%, -50%) scale(1);
+  letter-spacing:initial ;
+}
+.nav-list ul li:hover a{
+  color: crimson;
+}
+
+.hamburger{
+  height: 60px;
+  width: 60px;
+  display: inline-block;
+  border: 4px solid white;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+  transform:scale(.8);
+  margin-right: 20px;
+}
+.hamburger:after{
+  position:absolute;
+  content:'';
+  height: 100%;
+  width:100%;
+  border-radius: 50%;
+  border:3px solid white;
+  animation: hamburger_puls 1s ease infinite;
+}
+.hamburger .bar{
+height: 2px;
+width: 30px;
+position: relative;
+background-color: white;
+z-index: -1;
+}
+.hamburger .bar::after,
+.hamburger .bar::before{
+  content:'';
+  position: absolute;
+  height:100%;
+  width:100%;
+  left:0;
+  background-color: white;
+  transition: .3s ease;
+  transition-property: top, bottom;
+}
+.hamburger .bar::after{
+  top: 8px;
+}
+.hamburger .bar::before{
+  bottom: 8px;
+}
+.hamburger.active .bar::before{
+  bottom: 0;
+}
+.hamburger.active .bar::after{
+  
+  top: 0;
 }
 /*End Header*/
 /*hero section */
 #hero{
-  background-image:url(img/photo-background.jpg);
+  background-image:url(img/hero-bg.png);
   background-size: cover;  
   background-position: top-center;
   position: relative;
@@ -618,6 +687,7 @@ border: 10px solid crimson;
 /*About*/
 
 /*contact*/
+
 .contact{
   flex-direction: column;
   padding: 100px 0;
@@ -654,19 +724,58 @@ margin: 0;
 
 }
 /*contact*/
-/*End Media query for tablet*/
 
-/*media query for desktop*/
+/*header*/
+
+.hamburger{
+  display: none;
+}
+.nav-list ul{
+  position:initial;
+  display: block;
+  height: auto;
+  width: fit-content;
+  background-color: transparent;
+}
+.nav-list ul li{
+  display: inline-block;
+}
+.nav-list ul li a{
+  font-size: 1.8rem;
+}
+.nav-list ul a:after{
+display: none;
+ }
+
+/*End header*/
+
+/*Media query for tablet*/
 @media only screen and (min-width: 1200px){
 .dev_academic-bottom,.dev_academic-2-item,.dev_academic-3-item{
 flex-basis: 22%;
 margin: 1.5%;
+ }
 }
-}
+/*End Media query for tablet*/
+
+
+
 /*end media query for desktop*/
 
 
+
 /*keyframe*/
+@keyframes hamburger_puls{
+  0%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
 @keyframes text_reveal_box {
   50% {
       width: 100%;
